@@ -31,6 +31,11 @@ const nextConfig = {
         hostname: 'karmolog4u-backend-test.up.railway.app',
         pathname: '/**', // Якщо у вас є певний шаблон для шляхів
       },
+      {
+        protocol: 'https',
+        hostname: 'karmolog4u-backend.up.railway.app',
+        pathname: '/**', // Якщо у вас є певний шаблон для шляхів
+      },
     ],
   },
 };
