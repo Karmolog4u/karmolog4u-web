@@ -10,6 +10,7 @@ import { column1, column2 } from '@/components/Main/QuestionAnswer/QuestionAnswe
 import Research from '@/components/Main/Research/Research';
 import StarCustomers from '@/components/Main/StarCustomers/StarCustomers';
 import { getTranslations } from 'next-intl/server';
+import { web_site } from '../../../helper/consts';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
