@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { web_site } from '../../../../../helper/consts';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -9,7 +10,7 @@ export async function generateMetadata({ params }) {
   });
 
   return {
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
     title: t('title'),
     description: t('description'),
 
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }) {
       type: 'website',
     },
     robots: {
-      index: false,
+      index: true,
       follow: true,
       nocache: true,
       googleBot: {

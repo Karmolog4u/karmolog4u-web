@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 
   const t = await getTranslations({ locale, namespace: 'Metadata.Main' });
   return {
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
     title: t('title'),
     description: t('description'),
     alternates: {
@@ -48,12 +48,12 @@ export async function generateMetadata({ params }) {
       type: 'website',
     },
     robots: {
-      index: false,
+      index: true,
       follow: true,
       nocache: true,
       googleBot: {
         index: true,
-        follow: false,
+        follow: true,
         noimageindex: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
@@ -61,12 +61,8 @@ export async function generateMetadata({ params }) {
       },
     },
     twitter: {
-      // card: "summary_large_image",
       title: t('title'),
       description: t('description'),
-      // siteId: "1467726470533754880",
-      // creator: "@Karmolog4u",
-      // creatorId: "1467726470533754880",
       images: ['/twitter-image.png'],
     },
     manifest: '/manifest.json',

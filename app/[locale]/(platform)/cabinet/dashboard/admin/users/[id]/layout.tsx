@@ -1,3 +1,5 @@
+import { web_site } from "@/helper/consts";
+
 type ParamsProps = {
   params: Promise<{
     id: string;
@@ -11,7 +13,7 @@ export async function generateMetadata({ params }: ParamsProps) {
     title: 'Деталі користувача',
     description: 'Деталі користувача | Адмін',
 
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
 
     alternates: {
       canonical: `/cabinet/dashboard/admin/users/${id}`,

@@ -1,3 +1,5 @@
+import { web_site } from "@/helper/consts";
+
 type ParamsProps = {
   params: Promise<{
     course_id: string;
@@ -12,7 +14,7 @@ export const generateMetadata = async ({ params }: ParamsProps) => {
     title: 'Список Уроків | Модуль',
     description: 'Список Уроків | Адмін',
 
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
 
     alternates: {
       canonical: `/cabinet/dashboard/admin/education/${course_id}/modules/${module_id}/lessons`,

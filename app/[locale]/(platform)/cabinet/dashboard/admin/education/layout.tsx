@@ -1,10 +1,11 @@
+import { web_site } from '@/helper/consts';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Навчання',
   description: 'Навчання | Адмін',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/admin/education',

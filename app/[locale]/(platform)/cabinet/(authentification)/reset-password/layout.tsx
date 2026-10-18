@@ -1,6 +1,8 @@
+import { web_site } from "@/helper/consts";
+
 export async function generateMetadata() {
   return {
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
     title: 'Відновлення пароля',
     description: 'Відновлення пароля',
 

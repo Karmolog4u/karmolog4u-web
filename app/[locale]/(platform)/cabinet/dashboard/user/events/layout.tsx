@@ -1,10 +1,11 @@
+import { web_site } from '@/helper/consts';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Події',
   description: 'Події | Користувач',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/user/events',

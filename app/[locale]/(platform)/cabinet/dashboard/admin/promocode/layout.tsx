@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { web_site } from '@/helper/consts';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Додати подію',
   description: 'Додати подію | Адмін',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/admin/events/add',

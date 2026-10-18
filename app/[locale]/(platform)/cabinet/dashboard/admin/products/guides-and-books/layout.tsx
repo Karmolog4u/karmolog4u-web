@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import { web_site } from '@/helper/consts';
 
 export const metadata: Metadata = {
   title: 'Гайди та книги',
   description: 'Список гайдів та книг | Адмін',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/admin/products/guides-and-books',

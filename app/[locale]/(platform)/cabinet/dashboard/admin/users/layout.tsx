@@ -1,13 +1,13 @@
+import { web_site } from '@/helper/consts';
 import type { Metadata } from 'next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 export const metadata: Metadata = {
   title: 'Користувачі',
   description: 'Список користувачів | Адмін',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/admin/users',

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import { web_site } from '@/helper/consts';
 
 export const metadata: Metadata = {
   title: 'Видалені продукти',
   description: 'Видалені продукти | Адмін',
 
-  metadataBase: new URL('https://karmolog4u.vercel.app'),
+  metadataBase: new URL(web_site),
 
   alternates: {
     canonical: '/cabinet/dashboard/admin/deleted',

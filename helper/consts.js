@@ -1,9 +1,9 @@
 // export const base_url = 'http://localhost:3010';
 // export const base_url = 'http://localhost:4499';
-// export const base_url = 'https://karmolog-dev.up.railway.app';
-export const base_url = 'https://karmolog4u-backend-test.up.railway.app';
+// export const base_url = 'https://karmolog4u-backend-test.up.railway.app';
+export const base_url = 'https://karmolog4u-backend.up.railway.app';
 
-export const web_site = 'https://karmolog4u.com.ua';
+export const web_site = 'https://karmolog4u.newkarmolog4u.workers.dev';
 
 export const youtubeRegex =
   /(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+|(?:watch\?v=|v%3D)([\w-]+)))/;

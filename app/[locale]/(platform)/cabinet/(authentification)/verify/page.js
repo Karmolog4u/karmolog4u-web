@@ -1,8 +1,8 @@
 import VerifyUser from '@/components/Cabinet/Authentication/VerifyUser/VerifyUser';
 
-const VerifyUserPage = ({ searchParams }) => {
-
-  return <VerifyUser token={searchParams.token} />;
+const VerifyUserPage = async ({ searchParams }) => {
+  const { token } = await searchParams;
+  return <VerifyUser token={token} />;
 };
 
 export default VerifyUserPage;

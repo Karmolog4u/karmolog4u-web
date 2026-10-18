@@ -1,3 +1,5 @@
+import { web_site } from "@/helper/consts";
+
 type ParamsProps = {
   params: Promise<{
     meditation_id: string;
@@ -10,7 +12,7 @@ export const generateMetadata = async ({ params }: ParamsProps) => {
     title: 'Деталі гайду або книги',
     description: 'Деталі гайду або книги | Користувач',
 
-    metadataBase: new URL('https://karmolog4u.vercel.app'),
+    metadataBase: new URL(web_site),
 
     alternates: {
       canonical: `/cabinet/dashboard/user/products/guides-and-books/${meditation_id}`,
