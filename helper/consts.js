@@ -3,7 +3,7 @@
 // export const base_url = 'https://karmolog4u-backend-test.up.railway.app';
 export const base_url = 'https://karmolog4u-backend.up.railway.app';
 
-export const web_site = 'https://karmolog4u.newkarmolog4u.workers.dev';
+export const web_site = 'https://www.serhiiskliarenko.com.ua';
 
 export const youtubeRegex =
   /(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+|(?:watch\?v=|v%3D)([\w-]+)))/;
