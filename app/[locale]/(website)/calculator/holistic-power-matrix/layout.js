@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { web_site } from '@/helper/consts';
 
 export async function generateMetadata({ params }) {
+  const { locale } = await params;
   const t = await getTranslations({
     locale,
     namespace: 'Metadata.Calculator.holistic',
