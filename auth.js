@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { base_url } from '@/helper/consts';
+import { base_url, web_site } from '@/helper/consts';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -99,8 +99,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-    async redirect({ baseUrl }) {
-      return `${baseUrl}/cabinet/dashboard`; // Для інших користувачів
+    async redirect() {
+      return `${web_site}/cabinet/dashboard`; // Для інших користувачів
     },
   },
 });

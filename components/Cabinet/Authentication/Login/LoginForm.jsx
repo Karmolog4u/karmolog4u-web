@@ -14,11 +14,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const t = useTranslations('Author_products.buy_gift_modal');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onFormSubmit = async data => {
     const { email, password } = data;
