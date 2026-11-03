@@ -4,6 +4,7 @@
 export const base_url = 'https://karmolog4u-backend.up.railway.app';
 
 export const web_site = 'https://www.serhiiskliarenko.com.ua';
+export const tgLink = 'https://t.me/karmologforyou';
 
 export const youtubeRegex =
   /(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+|(?:watch\?v=|v%3D)([\w-]+)))/;
