@@ -26,7 +26,7 @@ const getGifts = async () => {
 };
 
 const GiftDetailsPage = () => {
-  const { locale, id } = useParams;
+  const { locale, id } = useParams();
   const pathname = usePathname();
 
   const { data: gift, isLoading: isGiftLoading } = useQuery({
@@ -54,7 +54,9 @@ const GiftDetailsPage = () => {
     },
   });
 
-  if (!gift) return null;
+  if (!gift) {
+    return <Container>Продукт не знайдено</Container>;
+  }
 
   const links = [
     { href: '/products/gifts', name: { uk: 'Подарунки Студії', ru: 'Подарки Студии' } },

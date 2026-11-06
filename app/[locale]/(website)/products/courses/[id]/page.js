@@ -26,7 +26,7 @@ const getWebinarsList = async () => {
 };
 
 const CoursesDetails = () => {
-  const { locale, id } = useParams;
+  const { locale, id } = useParams();
   const pathname = usePathname();
 
   const { data: webinar, isLoading: isWebLoading } = useQuery({
@@ -54,7 +54,9 @@ const CoursesDetails = () => {
     },
   });
 
-  if (!webinar) return null;
+  if (!webinar) {
+    return <Container>Продукт не знайдено</Container>;
+  }
 
   const links = [
     { href: '/products/courses', name: { uk: 'Навчальні курси', ru: 'Учебные курсы' } },

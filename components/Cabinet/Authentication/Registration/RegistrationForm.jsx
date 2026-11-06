@@ -124,8 +124,7 @@ const RegistrationForm = () => {
                   onChange={value => {
                     field.onChange(`+${value}`); // додаємо + вручну
                   }}
-                  prefix="+"
-                  defaultMask="+..(...) ...-..-.."
+                  defaultMask="(..) ...-..-.."
                   className={styles.phone}
                   inputClass={`${styles.flagInput} ${errors.mobPhone ? styles.error : ''}`}
                   buttonClass={styles.buttonClass}

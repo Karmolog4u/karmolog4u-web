@@ -54,7 +54,9 @@ const MeditationDetails = ({ params }) => {
     },
   });
 
-  if (!meditation) return null;
+  if (!meditation) {
+    return <Container>Продукт не знайдено</Container>;
+  }
 
   const links = [
     { href: '/products/meditations', name: { uk: 'Медитації', ru: 'Медитации' } },

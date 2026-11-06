@@ -21,6 +21,7 @@ import {
 
 import styles from './AddMeditationForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
 
 async function addMeditation({ data, token, action, id }) {
   const url =
@@ -113,15 +114,16 @@ const MeditationForm = ({ edit }) => {
     if (!getValues('category')) {
       setError('category', { type: 'manual', message: 'Оберіть категорію' });
     }
-    if (!video || !youtubeRegex.test(video)) {
+
+    const videoId = getYoutubeVideoId(video);
+
+    if (!video || !videoId) {
       setError('video', {
         type: 'manual',
         message: 'Введіть посилання з YouTube',
       });
       return;
     }
-
-    const videoId = video.match(youtubeRegex)[1];
 
     const formData = new FormData();
     const requiredParams = {

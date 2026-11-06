@@ -53,7 +53,9 @@ const GuideAndBooksDetails = () => {
     },
   });
 
-  if (!guideAndBook) return null;
+  if (!guideAndBook) {
+    return <Container>Продукт не знайдено</Container>;
+  }
 
   const links = [
     { href: '/products/guides-and-books', name: 'Гайди та книги' },

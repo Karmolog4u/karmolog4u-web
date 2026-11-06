@@ -13,7 +13,6 @@ const MeditationsDescriptions = ({ product }) => {
   const { video, cover, name, description, price, category, discount, detailsDescription } =
     product;
 
-  console.log(product);
 
   return (
     <div className={styles.wrapper}>
