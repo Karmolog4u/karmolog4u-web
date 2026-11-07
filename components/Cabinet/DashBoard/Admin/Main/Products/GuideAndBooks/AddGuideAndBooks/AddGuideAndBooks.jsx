@@ -10,11 +10,12 @@ import RequiredLabels from '../../Meditations/AddMeditation/RequiredLabels/Requi
 import OtherGuidesPart from './OtherGuidesPart/OtherGuidesPart';
 import BooksPart from './BooksPart/BooksPart';
 import GuidesPart from './GuidesPart/GuidesPart';
-import { base_url, BOOKS, GUIDES, OTHER_GUIDES, youtubeRegex } from '@/helper/consts';
+import Description from '../../Meditations/AddMeditation/ClosedPart/Description';
+import { base_url, BOOKS, GUIDES, OTHER_GUIDES } from '@/helper/consts';
+import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
 
 import styles from './AddGuideAndBooks.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import Description from '../../Meditations/AddMeditation/ClosedPart/Description';
 
 async function guideAndBooksAction({ data, token, action, id }) {
   const url =
@@ -109,13 +110,16 @@ const AddGuideAndBooks = ({ edit }) => {
     }
 
     if (category === OTHER_GUIDES) {
-      if (!video || !youtubeRegex.test(video)) {
+      const videoId = getYoutubeVideoId(video);
+
+      if (!video || !videoId) {
         setError('video', {
           type: 'manual',
           message: 'Введіть посилання з YouTube',
         });
         return;
       }
+      formData.append('video', videoId);
     }
 
     if (!file) {
@@ -138,11 +142,6 @@ const AddGuideAndBooks = ({ edit }) => {
     //перевірка чи існує cover і якщо да то перевіряємо чи файл
     if (cover) {
       formData.append('cover', cover);
-    }
-
-    if (category === OTHER_GUIDES) {
-      const videoId = video.match(youtubeRegex)[1];
-      formData.append('video', videoId);
     }
 
     formData.append('price', price);

@@ -9,7 +9,8 @@ import SubmitButtons from '../../Meditations/AddMeditation/SubmitButtons/SubmitB
 import WebinarPart from './WebinarPart/WebinarPart';
 import EthersPart from './EthersPart/EthersPart';
 import RequiredLabels from '../../Meditations/AddMeditation/RequiredLabels/RequiredLabels';
-import { base_url, ETHERS, WEBINARS, youtubeRegex } from '@/helper/consts';
+import { base_url, ETHERS, WEBINARS } from '@/helper/consts';
+import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddWebinar.module.scss';
@@ -117,7 +118,10 @@ const AddWebinar = ({ edit }) => {
     if (!getValues('category')) {
       setError('category', { type: 'manual', message: 'Оберіть категорію' });
     }
-    if (!data.video || !youtubeRegex.test(data.video)) {
+
+    const videoId = getYoutubeVideoId(video);
+
+    if (!video || !videoId) {
       setError('video', {
         type: 'manual',
         message: 'Введіть посилання з YouTube',
@@ -127,7 +131,6 @@ const AddWebinar = ({ edit }) => {
 
     const formData = new FormData();
 
-    const videoId = video.match(youtubeRegex)[1];
     const requiredParams = {
       name: { uk: name_uk, ru: name_ru },
       category,

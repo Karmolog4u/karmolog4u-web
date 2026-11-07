@@ -86,13 +86,6 @@ const AddGift = ({ edit }) => {
     const { name_uk, name_ru, status, cover, description_uk, description_ru, discount, price } =
       data;
 
-    // if (!cover || cover.length === 0) {
-    //   setError('cover', {
-    //     type: 'manual',
-    //     message: 'Додайте Картинку',
-    //   });
-    // }
-
     const formData = new FormData();
 
     const requiredParams = {
