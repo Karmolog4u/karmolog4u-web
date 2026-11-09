@@ -1,5 +1,6 @@
 import { open_Sans } from '@/app/[locale]/fonts';
 import styles from './PaymentSection.module.scss';
+import { tgLink } from '@/helper/consts';
 
 interface PaymentSectionProps {
   price: number;
@@ -19,7 +20,10 @@ const PaymentSection = ({ price, setShowModal, discount }: PaymentSectionProps) 
       </div>
       <button
         className={`${styles.button} ${open_Sans.className}`}
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setShowModal(false);
+          window.open(tgLink, '_blank', 'noopener,noreferrer');
+        }}
       >
         Придбати
       </button>

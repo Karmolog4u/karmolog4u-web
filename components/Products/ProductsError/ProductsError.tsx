@@ -1,10 +1,5 @@
+const ProductsError = ({ error }: { error: string }) => {
+  return <div>{error ? error : 'Помилка'}</div>;
+};
 
-const ProductsError = () => {
-  return (
-    <div>
-      Помилка
-    </div>
-  )
-}
-
-export default ProductsError
+export default ProductsError;

@@ -11,8 +11,11 @@ import ProductElementInList from '../ProductElementInList/ProductElementInList';
 
 const getGifts = async () => {
   const res = await fetch(`${base_url}/products/gifts/get-all`);
+  if (!res.ok && res.status === 404) {
+    throw new Error('Подарунки не знайдено');
+  }
   if (!res.ok) {
-    throw new Error('Помилка завантаження подарунків');
+    throw new Error(res.statusText || 'Помилка при отриманні подарунків');
   }
   return res.json();
 };
@@ -22,6 +25,7 @@ const Gifts = () => {
     data: gifts,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ['gifts'],
     queryFn: () => getGifts(),
@@ -30,7 +34,7 @@ const Gifts = () => {
   });
 
   if (isLoading) return <ProductsLoading />;
-  if (isError) return <ProductsError />;
+  if (isError) return <ProductsError error={error.message} />;
 
   return (
     <ul className={styles.gifts_list}>
