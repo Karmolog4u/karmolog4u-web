@@ -16,8 +16,9 @@ const Cover = ({ card }: CoverProps) => {
   const p = usePathname();
   const params = useParams();
   const { cover, isWaiting, video, category, discount = null, id } = card;
+  console.log(card);
 
-  if ((isWaiting && !cover) || (!cover && !video)) {
+  if ((isWaiting && !cover) || (!cover && !video) || !cover?.startsWith('http')) {
     return (
       <div className={styles.waiting_card}>
         <Logo styled={styles.card_logo} />

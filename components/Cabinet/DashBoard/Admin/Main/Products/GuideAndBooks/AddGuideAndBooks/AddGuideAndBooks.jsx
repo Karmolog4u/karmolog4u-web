@@ -12,10 +12,10 @@ import BooksPart from './BooksPart/BooksPart';
 import GuidesPart from './GuidesPart/GuidesPart';
 import Description from '../../Meditations/AddMeditation/ClosedPart/Description';
 import { base_url, BOOKS, GUIDES, OTHER_GUIDES } from '@/helper/consts';
-import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
 
 import styles from './AddGuideAndBooks.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { getYoutubeUrlData } from '../../../../../../../../helper/platform/getYoutubeId';
 
 async function guideAndBooksAction({ data, token, action, id }) {
   const url =
@@ -109,17 +109,27 @@ const AddGuideAndBooks = ({ edit }) => {
       setError('category', { type: 'manual', message: 'Оберіть категорію' });
     }
 
-    if (category === OTHER_GUIDES) {
-      const videoId = getYoutubeVideoId(video);
+    const videoUrl = typeof video === 'string' ? video.trim() : '';
+    const youtubeData = getYoutubeUrlData(videoUrl);
+    let externalLink = '';
 
-      if (!video || !videoId) {
+    // Відео необов'язкове. Якщо посилання не розпізналося як YouTube,
+    // передаємо його окремо як link, але лише коли це HTTP(S) URL.
+    if (videoUrl && !youtubeData.video && !youtubeData.playlist) {
+      try {
+        const parsedUrl = new URL(videoUrl);
+        if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+          externalLink = videoUrl;
+        } else {
+          throw new Error('Invalid link');
+        }
+      } catch {
         setError('video', {
           type: 'manual',
-          message: 'Введіть посилання з YouTube',
+          message: 'Введіть коректне посилання',
         });
         return;
       }
-      formData.append('video', videoId);
     }
 
     if (!file) {
@@ -127,6 +137,12 @@ const AddGuideAndBooks = ({ edit }) => {
     }
 
     const formData = new FormData();
+
+    formData.append(
+      'video',
+      JSON.stringify({ video: youtubeData.video, playlist: youtubeData.playlist })
+    );
+    if (externalLink) formData.append('link', externalLink);
 
     const requiredParams = {
       name: { uk: name_uk, ru: name_ru },

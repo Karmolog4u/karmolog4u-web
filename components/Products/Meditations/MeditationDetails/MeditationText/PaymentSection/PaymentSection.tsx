@@ -20,10 +20,7 @@ const PaymentSection = ({ price, setShowModal, discount }: PaymentSectionProps) 
       </div>
       <button
         className={`${styles.button} ${open_Sans.className}`}
-        onClick={() => {
-          setShowModal(false);
-          window.open(tgLink, '_blank', 'noopener,noreferrer');
-        }}
+        onClick={() => setShowModal(true)}
       >
         Придбати
       </button>

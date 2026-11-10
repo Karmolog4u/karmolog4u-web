@@ -31,7 +31,6 @@ const Price = () => {
             type="number"
             min={0}
             {...register('price', {
-              required: 'Це поле є обов’язковим',
               pattern: {
                 value: /^[0-9]+$/,
                 message: 'Введіть тільки цифри',

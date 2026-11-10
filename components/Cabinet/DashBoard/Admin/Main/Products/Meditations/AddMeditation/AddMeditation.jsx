@@ -16,12 +16,12 @@ import {
   base_url,
   CLOSED_MEDITATIONS,
   OPENED_MEDITATIONS,
-  youtubeRegex,
+  PUBLISHED,
 } from '@/helper/consts';
 
 import styles from './AddMeditationForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
+import { getYoutubeUrlData } from '../../../../../../../../helper/platform/getYoutubeId';
 
 async function addMeditation({ data, token, action, id }) {
   const url =
@@ -57,11 +57,22 @@ const setDefaultValues = item => {
     cover = null,
   } = item;
 
+  const videoUrl =
+    typeof video === 'string'
+      ? video
+        ? `https://youtube.com/watch?v=${video}`
+        : ''
+      : video?.video
+        ? `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`
+        : video?.playlist
+          ? `https://youtube.com/playlist?list=${video.playlist}`
+          : '';
+
   return {
     name_uk: name.uk,
     name_ru: name.ru,
     category: category,
-    video: `https://youtube.com/watch?v=${video}`,
+    video: videoUrl,
     isWaiting: isWaiting,
     description_uk: description.uk,
     description_ru: description.ru,
@@ -114,10 +125,10 @@ const MeditationForm = ({ edit }) => {
     if (!getValues('category')) {
       setError('category', { type: 'manual', message: 'Оберіть категорію' });
     }
+    //дістаємо дані з посилання на YouTube
+    const youtubeData = getYoutubeUrlData(video);
 
-    const videoId = getYoutubeVideoId(video);
-
-    if (!video || !videoId) {
+    if (!youtubeData.video && !youtubeData.playlist && status === PUBLISHED) {
       setError('video', {
         type: 'manual',
         message: 'Введіть посилання з YouTube',
@@ -130,15 +141,21 @@ const MeditationForm = ({ edit }) => {
       name: { uk: name_uk, ru: name_ru },
       category,
       status,
-      video: videoId,
+      video: youtubeData,
     };
     //додаємо ключи які точно є
     Object.entries(requiredParams).forEach(([key, value]) =>
       formData.append(key, JSON.stringify(value))
     );
-    //перевірка чи існує cover і якщо да то перевіряємо чи файл
-    if (cover) {
-      formData.append('cover', cover);
+    //додаємо обкладинку якщо існує
+    const coverFile =
+      typeof File !== 'undefined' && cover instanceof File
+        ? cover
+        : typeof FileList !== 'undefined' && cover instanceof FileList
+          ? cover.item(0)
+          : null;
+    if (coverFile) {
+      formData.append('cover', coverFile);
     }
     //додаємо опис якщо існує
     if (description_ru && description_uk) {
@@ -148,7 +165,7 @@ const MeditationForm = ({ edit }) => {
       const { isWaiting } = data;
       formData.append('isWaiting', isWaiting);
     }
-    if (data.category === CLOSED_MEDITATIONS) {
+    if (data.category === CLOSED_MEDITATIONS && status === PUBLISHED) {
       const { price, discount = null } = data;
       formData.append('price', price);
       if (discount) {

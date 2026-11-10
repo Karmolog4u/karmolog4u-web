@@ -1,7 +1,7 @@
-// export const base_url = 'http://localhost:3010';
+export const base_url = 'http://localhost:3010';
 // export const base_url = 'http://localhost:4499';
 // export const base_url = 'https://karmolog4u-backend-test.up.railway.app';
-export const base_url = 'https://karmolog4u-backend.up.railway.app';
+// export const base_url = 'https://karmolog4u-backend.up.railway.app';
 
 export const web_site = 'https://www.serhiiskliarenko.com.ua';
 export const tgLink = 'https://t.me/karmologforyou';

@@ -10,7 +10,7 @@ import WebinarPart from './WebinarPart/WebinarPart';
 import EthersPart from './EthersPart/EthersPart';
 import RequiredLabels from '../../Meditations/AddMeditation/RequiredLabels/RequiredLabels';
 import { base_url, ETHERS, WEBINARS } from '@/helper/consts';
-import { getYoutubeVideoId } from '../../../../../../../../helper/platform/getYoutubeId';
+import { getYoutubeUrlData } from '../../../../../../../../helper/platform/getYoutubeId';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddWebinar.module.scss';
@@ -119,9 +119,10 @@ const AddWebinar = ({ edit }) => {
       setError('category', { type: 'manual', message: 'Оберіть категорію' });
     }
 
-    const videoId = getYoutubeVideoId(video);
+    //дістаємо дані з посилання на YouTube
+    const youtubeData = getYoutubeUrlData(video);
 
-    if (!video || !videoId) {
+    if (!youtubeData.video && !youtubeData.playlist && status === PUBLISHED) {
       setError('video', {
         type: 'manual',
         message: 'Введіть посилання з YouTube',
@@ -135,7 +136,10 @@ const AddWebinar = ({ edit }) => {
       name: { uk: name_uk, ru: name_ru },
       category,
       status,
-      video: videoId,
+      video: {
+        video: youtubeData.video,
+        playlist: category === WEBINARS ? youtubeData.playlist : '',
+      },
     };
     //додаємо ключи які точно є
     Object.entries(requiredParams).forEach(([key, value]) => {

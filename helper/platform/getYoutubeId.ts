@@ -1,17 +1,23 @@
-export const getYoutubeVideoId = (url: string): string | null => {
+type YoutubeUrlResult = { video: string; playlist: string };
+
+export const getYoutubeUrlData = (url: string): YoutubeUrlResult => {
   try {
     const parsedUrl = new URL(url);
 
-    if (parsedUrl.hostname.endsWith('youtu.be')) {
-      return parsedUrl.pathname.slice(1) || null;
-    }
-
-    return (
+    const playlist = parsedUrl.searchParams.get('list') || '';
+    const video =
       parsedUrl.searchParams.get('v') ||
       parsedUrl.pathname.match(/\/(?:embed|shorts|v)\/([\w-]+)/)?.[1] ||
-      null
-    );
+      (parsedUrl.hostname.endsWith('youtu.be')
+        ? parsedUrl.pathname.split('/').filter(Boolean)[0]
+        : '') ||
+      '';
+
+    return { video, playlist };
   } catch {
-    return null;
+    return { video: '', playlist: '' };
   }
 };
+
+export const getYoutubeVideoId = (url: string): string | null =>
+  getYoutubeUrlData(url).video || null;
