@@ -5,8 +5,9 @@ import { localeConfig } from './i18n/config';
 const intlMiddleware = createMiddleware(localeConfig);
 
 export default async function middleware(req) {
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
   const { pathname } = req.nextUrl;
+  const isCabinetPath = /(?:^|\/)cabinet(?:\/|$)/.test(pathname);
+  const token = isCabinetPath ? await getToken({ req, secret: process.env.AUTH_SECRET }) : null;
 
   // === Спочатку перевіряємо авторизацію
   const isPublicPage =

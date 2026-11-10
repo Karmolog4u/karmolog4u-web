@@ -22,7 +22,6 @@ const EventsLink = ({ name, formName }: EventsLinkProps) => {
       <input
         type="url"
         {...register(formName, {
-          required: 'Посилання обовʼязкове',
           pattern: {
             value: /^(https?:\/\/)([\w\-]+\.)+[a-z]{2,}(\/\S*)?$/i,
             message: 'Введіть коректне посилання',
