@@ -62,6 +62,9 @@ const EditButton = ({ id, name, status }) => {
       queryClient.invalidateQueries({ queryKey: ['webinars'] });
       queryClient.invalidateQueries({ queryKey: ['products-count'] });
     },
+    onError: error => {
+      toast.error(error.message || 'Упс щось трапилось');
+    },
   });
 
   const onHide = () => {

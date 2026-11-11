@@ -23,13 +23,14 @@ const fetchProduct = async (id, token) => {
 
 const WebinarDetailed = async ({ params }) => {
   try {
+    const { webinar_id } = await params;
     const session = await getServerSession(authOptions);
     const accessToken = session?.accessToken;
     if (!accessToken) {
       console.error('Access token not found in session');
       return <div>Немає доступу</div>;
     }
-    const product = await fetchProduct(params.webinar_id, accessToken);
+    const product = await fetchProduct(webinar_id, accessToken);
 
     if (!product) notFound();
 

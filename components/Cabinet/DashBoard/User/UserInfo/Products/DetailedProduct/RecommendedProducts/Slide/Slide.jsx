@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import styles from './Slide.module.scss';
 import { inter } from '@/app/[locale]/layout';
+import { web_site } from '../../../../../../../../../helper/consts';
 
 const Slide = ({ slide }) => {
   const { id, targetModule, cover, name } = slide;
@@ -15,7 +16,7 @@ const Slide = ({ slide }) => {
 
   return (
     <Link
-      href={`${window.location.origin}/products/${productType[targetModule]}/${id}`}
+      href={`${web_site}/products/${productType[targetModule]}/${id}`}
       target="_blank"
       rel="noreferrer noopener"
       className={`${styles.link}`}

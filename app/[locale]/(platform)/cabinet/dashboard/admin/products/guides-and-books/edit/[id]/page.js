@@ -23,8 +23,9 @@ const editGuideAndBook = async (id, token) => {
 };
 
 const EditPage = async ({ params }) => {
+  const { id } = await params;
   const { accessToken } = await getServerSession(authOptions);
-  const guide_and_book = await editGuideAndBook(params.id, accessToken);
+  const guide_and_book = await editGuideAndBook(id, accessToken);
 
   return (
     <div className={styles.wrapper}>

@@ -23,8 +23,9 @@ const editGift = async (id, token) => {
 };
 
 const EditPage = async ({ params }) => {
+  const { id } = await params;
   const { accessToken } = await getServerSession(authOptions);
-  const gift = await editGift(params.id, accessToken);
+  const gift = await editGift(id, accessToken);
 
   return (
     <div className={styles.wrapper}>

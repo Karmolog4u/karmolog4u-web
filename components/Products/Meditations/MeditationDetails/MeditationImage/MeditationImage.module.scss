@@ -41,3 +41,27 @@
   width: 80px;
   height: 80px;
 }
+
+.redirect_link {
+  display: flex;
+  width: 328px;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: $buttons_color;
+  @include fontRegular(16px, 600, 16px, $third_text_color);
+  transition: all 250ms ease;
+
+  @media (hover: hover) {
+    &:is(:hover, :focus) {
+      scale: 1.05;
+    }
+  }
+
+  @media (hover: none) {
+    &:is(:active, :focus) {
+      scale: 1.05;
+    }
+  }
+}

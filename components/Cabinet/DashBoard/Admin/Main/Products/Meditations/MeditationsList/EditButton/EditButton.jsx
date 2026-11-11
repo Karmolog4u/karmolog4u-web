@@ -8,6 +8,7 @@ import { base_url, HIDDEN, PUBLISHED } from '@/helper/consts';
 import ConfirmDialogSet from '../../../ConfirmDialogSet/ConfirmDialogSet';
 
 import 'primereact/resources/primereact.min.css';
+import { toast } from 'react-toastify';
 
 const deleteMeditation = async (id, token) => {
   const res = await fetch(`${base_url}/admin/products/meditations/delete/${id}`, {
@@ -61,6 +62,9 @@ const EditButton = ({ id, name, status }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['meditations'] });
       queryClient.invalidateQueries({ queryKey: ['products-count'] });
+    },
+    onError: error => {
+      toast.error(error.message || 'Упс щось трапилось');
     },
   });
 

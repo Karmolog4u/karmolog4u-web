@@ -8,6 +8,7 @@ import EditMenu from '../../../Meditations/MeditationsList/EditButton/EditMenu';
 import { base_url, HIDDEN, PUBLISHED } from '@/helper/consts';
 
 import 'primereact/resources/primereact.min.css';
+import { toast } from 'react-toastify';
 
 const deleteGuideAndBooks = async (id, token) => {
   const res = await fetch(`${base_url}/admin/products/guides-and-books/delete/${id}`, {
@@ -63,7 +64,7 @@ const EditButton = ({ id, name, status }) => {
       queryClient.invalidateQueries({ queryKey: ['products-count'] });
     },
     onError: er => {
-      console.log(er);
+      toast.error(er.message || 'Упс щось трапилось');
     },
   });
 

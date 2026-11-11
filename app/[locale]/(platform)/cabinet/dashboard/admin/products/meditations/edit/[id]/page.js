@@ -23,8 +23,9 @@ const editMeditation = async (id, token) => {
 };
 
 const EditPage = async ({ params }) => {
+  const { id } = await params;
   const { accessToken } = await getServerSession(authOptions);
-  const meditation = await editMeditation(params.id, accessToken);
+  const meditation = await editMeditation(id, accessToken);
 
   return (
     <div className={styles.wrapper}>

@@ -11,7 +11,7 @@ import OtherGuidesPart from './OtherGuidesPart/OtherGuidesPart';
 import BooksPart from './BooksPart/BooksPart';
 import GuidesPart from './GuidesPart/GuidesPart';
 import Description from '../../Meditations/AddMeditation/ClosedPart/Description';
-import { base_url, BOOKS, GUIDES, OTHER_GUIDES } from '@/helper/consts';
+import { base_url, BOOKS, GUIDES, OTHER_GUIDES, PUBLISHED } from '@/helper/consts';
 
 import styles from './AddGuideAndBooks.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -40,12 +40,31 @@ async function guideAndBooksAction({ data, token, action, id }) {
 
 const setDefaultValues = item => {
   if (!item) return {};
-  const { name, category, video, description, price = '', discount = null, cover = null } = item;
+  const {
+    name,
+    category,
+    video,
+    link,
+    file,
+    description,
+    price = '',
+    discount = null,
+    cover = null,
+  } = item;
+  const videoId = typeof video === 'object' ? video?.video : video;
+  const playlistId = typeof video === 'object' ? video?.playlist : '';
+  const youtubeUrl = videoId
+    ? `https://youtube.com/watch?v=${videoId}${playlistId ? `&list=${playlistId}` : ''}`
+    : playlistId
+      ? `https://youtube.com/playlist?list=${playlistId}`
+      : link || '';
+
   return {
     name_uk: name.uk,
     name_ru: name.ru,
     category: category,
-    video: `https://youtube.com/watch?v=${video}`,
+    file: file ?? null,
+    video: youtubeUrl,
     description_uk: description.uk,
     description_ru: description.ru,
     price: price,
@@ -132,15 +151,19 @@ const AddGuideAndBooks = ({ edit }) => {
       }
     }
 
-    if (!file) {
-      setError('file', { type: 'manual' });
+    const selectedFile =
+      typeof FileList !== 'undefined' && file instanceof FileList ? file.item(0) : file;
+
+    if (!selectedFile && category !== OTHER_GUIDES && status === PUBLISHED) {
+      setError('file', { type: 'manual', message: 'Додайте файл' });
+      return;
     }
 
     const formData = new FormData();
 
     formData.append(
       'video',
-      JSON.stringify({ video: youtubeData.video, playlist: youtubeData.playlist })
+      JSON.stringify({ video: youtubeData.video || '', playlist: youtubeData.playlist || '' })
     );
     if (externalLink) formData.append('link', externalLink);
 
@@ -148,7 +171,7 @@ const AddGuideAndBooks = ({ edit }) => {
       name: { uk: name_uk, ru: name_ru },
       category,
       status,
-      file,
+      file: selectedFile ?? '',
     };
 
     Object.entries(requiredParams).forEach(([key, value]) =>

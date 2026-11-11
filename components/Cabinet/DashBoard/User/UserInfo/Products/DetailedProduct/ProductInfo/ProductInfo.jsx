@@ -2,12 +2,16 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import YouTube from 'react-youtube';
 import TitleNoStyles from '../../../../../../../Common/TitleNoStyles/TitleNoStyles';
 import { BOOKS, CLOSED_MEDITATIONS, GUIDES, OTHER_GUIDES, WEBINARS } from '@/helper/consts';
-import styles from './ProductInfo.module.scss';
 import { useFileDownload } from '@/hooks/useFileDownload';
+import Logo from '@/components/Common/Icons/Logo';
+
+import styles from './ProductInfo.module.scss';
+import Cover from './Cover/Cover';
 
 const ProductInfo = ({ product }) => {
   const router = useRouter();
@@ -23,7 +27,10 @@ const ProductInfo = ({ product }) => {
     detailsTitle = null,
     detailsDescription = null,
     file = null,
+    link = null,
   } = product;
+
+  console.log(product);
 
   const categoriesMap = {
     [CLOSED_MEDITATIONS]: 'Медитація',
@@ -34,7 +41,6 @@ const ProductInfo = ({ product }) => {
   };
 
   const { mutate: downloadFile } = useFileDownload(token?.accessToken || '');
-
   return (
     <div className={styles.main_wrapper}>
       <button
@@ -48,19 +54,7 @@ const ProductInfo = ({ product }) => {
       </button>
       <div className={`${styles.info_wrapper}`}>
         <div className={`${styles.info_wrapper} ${styles.additional_info_wrapper}`}>
-          {!!video ? (
-            <YouTube
-              videoId={video}
-              iframeClassName={styles.video}
-              opts={{
-                playerVars: { controls: 1, rel: 0 },
-                width: '100%',
-                height: '100%',
-              }}
-            />
-          ) : (
-            <Image src={cover} width={312} height={208} alt={name.uk} className={styles.img} />
-          )}
+          <Cover video={video} link={link} cover={cover} name={name} />
           <div className={`${styles.info_wrapper}`}>
             <div className={styles.download_wrapper}>
               <p className={styles.category}>{categoriesMap[category]}</p>

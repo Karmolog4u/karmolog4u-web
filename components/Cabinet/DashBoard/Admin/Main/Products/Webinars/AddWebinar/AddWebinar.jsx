@@ -53,7 +53,7 @@ const setDefaultValues = item => {
     name_uk: name.uk,
     name_ru: name.ru,
     category: category,
-    video: `https://youtube.com/watch?v=${video}`,
+    video: `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`,
     isWaiting: isWaiting,
     description_uk: description.uk,
     description_ru: description.ru,

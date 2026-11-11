@@ -23,13 +23,14 @@ const fetchUserDetails = async (id, token) => {
 export const revalidate = 0;
 
 const UserProfilePage = async ({ params }) => {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   const accessToken = session?.accessToken;
   if (!accessToken || session?.user?.role !== 'ADMIN') {
     console.error('Access token not found in session');
     return <div>Немає доступу</div>;
   }
-  const userDetails = await fetchUserDetails(params.id, accessToken);
+  const userDetails = await fetchUserDetails(id, accessToken);
 
   if (!userDetails) notFound();
 

@@ -57,22 +57,11 @@ const setDefaultValues = item => {
     cover = null,
   } = item;
 
-  const videoUrl =
-    typeof video === 'string'
-      ? video
-        ? `https://youtube.com/watch?v=${video}`
-        : ''
-      : video?.video
-        ? `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`
-        : video?.playlist
-          ? `https://youtube.com/playlist?list=${video.playlist}`
-          : '';
-
   return {
     name_uk: name.uk,
     name_ru: name.ru,
     category: category,
-    video: videoUrl,
+    video: `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`,
     isWaiting: isWaiting,
     description_uk: description.uk,
     description_ru: description.ru,

@@ -11,7 +11,7 @@ export interface ProductCardProps {
   id: string;
   name: { [key: string]: string };
   cover?: string; // робимо опціональним, бо у Cover перевіряємо !cover
-  video?: string;
+  video?: { video: string; playlist?: string };
   category: Category;
   price?: number;
   isWaiting: boolean;

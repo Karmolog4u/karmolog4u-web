@@ -65,3 +65,20 @@
   @include fontRegular(13px, 600, 20.02px, $buttons_color, right);
   margin-top: auto;
 }
+
+.waiting_card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 126px;
+  border-radius: 10px;
+  background-image: linear-gradient(270deg, #cfb691 -135.76%, #000 102.98%);
+
+}
+
+.card_logo {
+  width: 70px;
+  height: 70px;
+  fill: white;
+}

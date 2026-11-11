@@ -16,9 +16,8 @@ const Cover = ({ card }: CoverProps) => {
   const p = usePathname();
   const params = useParams();
   const { cover, isWaiting, video, category, discount = null, id } = card;
-  console.log(card);
 
-  if ((isWaiting && !cover) || (!cover && !video) || !cover?.startsWith('http')) {
+  if ((isWaiting && !cover) || (!cover && !video && !cover?.startsWith('http'))) {
     return (
       <div className={styles.waiting_card}>
         <Logo styled={styles.card_logo} />
@@ -26,7 +25,7 @@ const Cover = ({ card }: CoverProps) => {
     );
   }
   if (!isWaiting && video && [ARCANES, ETHERS].includes(category)) {
-    return <Youtube videoId={video} iframeClassName={styles.video} />;
+    return <Youtube videoId={video.video} iframeClassName={styles.video} />;
   }
   return (
     <Link
