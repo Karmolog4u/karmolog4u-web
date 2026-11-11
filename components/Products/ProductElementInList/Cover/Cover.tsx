@@ -16,23 +16,26 @@ const Cover = ({ card }: CoverProps) => {
   const p = usePathname();
   const params = useParams();
   const { cover, isWaiting, video, category, discount = null, id } = card;
+  const coverUrl = typeof cover === 'string' && cover.startsWith('http') ? cover : '';
 
-  if ((isWaiting && !cover) || (!cover && !video && !cover?.startsWith('http'))) {
+  if (video?.video && !isWaiting && [ARCANES, ETHERS].includes(category)) {
+    return <Youtube videoId={video.video} iframeClassName={styles.video} />;
+  }
+
+  if (!coverUrl && !video?.video) {
     return (
       <div className={styles.waiting_card}>
         <Logo styled={styles.card_logo} />
       </div>
     );
   }
-  if (!isWaiting && video && [ARCANES, ETHERS].includes(category)) {
-    return <Youtube videoId={video.video} iframeClassName={styles.video} />;
-  }
+
   return (
     <Link
       className={styles.cover_wrapper}
       href={`${params.id ? `${p.split('/').slice(0, -1).join('/')}/${id}` : `${p}/${id}`}`}
     >
-      <Image src={cover!} alt="Cover" className={styles.video} width={302} height={190} />
+      <Image src={coverUrl} alt="Cover" className={styles.video} width={302} height={190} />
       {category === CLOSED_MEDITATIONS && discount && (
         <span className={styles.discount}>-{discount.discount}%</span>
       )}
