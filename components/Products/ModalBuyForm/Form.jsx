@@ -126,11 +126,11 @@ const Form = ({ price, id }) => {
           </label>
           <p className={styles.text}>
             {t('license.part1')}{' '}
-            <Link href={'/'} target="_blank">
+            <Link href={'/policy'} target="_blank">
               {t('license.part2')}
             </Link>{' '}
             {t('license.part3')}{' '}
-            <Link href={'/'} target="_blank">
+            <Link href={'/offer'} target="_blank">
               {t('license.part4')}
             </Link>
           </p>
