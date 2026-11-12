@@ -7,7 +7,7 @@ export const getYoutubeUrlData = (url: string): YoutubeUrlResult => {
     const playlist = parsedUrl.searchParams.get('list') || '';
     const video =
       parsedUrl.searchParams.get('v') ||
-      parsedUrl.pathname.match(/\/(?:embed|shorts|v)\/([\w-]+)/)?.[1] ||
+      parsedUrl.pathname.match(/\/(?:embed|shorts|live|v)\/([\w-]+)/)?.[1] ||
       (parsedUrl.hostname.endsWith('youtu.be')
         ? parsedUrl.pathname.split('/').filter(Boolean)[0]
         : '') ||
