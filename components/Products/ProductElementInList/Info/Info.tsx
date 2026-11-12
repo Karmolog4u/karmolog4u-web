@@ -30,7 +30,7 @@ const Info = ({ card, setShowModal }: InfoProps) => {
 
   const getPriceWithDiscount = () => {
     if (!discount || !price) return '';
-    return price - (price * discount.discount) / 100;
+    return (price - (price * discount.discount) / 100).toFixed(2);
   };
 
   const showSellButtonCategories = [CLOSED_MEDITATIONS, WEBINARS, GUIDES, BOOKS, OTHER_GUIDES];

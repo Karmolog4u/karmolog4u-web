@@ -10,7 +10,7 @@ interface PaymentSectionProps {
 const PaymentSection = ({ price, setShowModal, discount }: PaymentSectionProps) => {
   const getPriceWithDiscount = () => {
     if (!discount || !price) return '';
-    return price - (price * discount.discount) / 100;
+    return (price - (price * discount.discount) / 100).toFixed(2);
   };
   return (
     <div className={styles.wrapper}>
