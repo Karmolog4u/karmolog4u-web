@@ -9,9 +9,7 @@ import 'react-phone-input-2/lib/bootstrap.css';
 import Title from '@/components/Common/Title/Title';
 import Link from 'next/link';
 import FormInput from './FormInput/FormInput';
-import { useMutation } from '@tanstack/react-query';
 import { base_url } from '../../../helper/consts';
-import { toast } from 'react-toastify';
 import useSendDataToWayForPay from '../../../hooks/useSendDataToWayForPay';
 
 const sendCustomerInfo = async (data, token) => {
@@ -76,6 +74,7 @@ const Form = ({ price, id }) => {
           name="email"
           labelName={t('email.email')}
           inputConfig={{
+            setValueAs: value => (typeof value === 'string' ? value.trim() : value),
             required: t('email.empty_error'),
             pattern: {
               value: /\S+@\S+\.\S+/,

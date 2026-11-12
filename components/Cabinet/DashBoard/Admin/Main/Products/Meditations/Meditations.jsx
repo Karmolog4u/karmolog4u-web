@@ -54,7 +54,7 @@ const Meditations = () => {
 
   if (isError) return <div>Error...</div>;
 
-  if (!meditations) return null;
+  if (!meditations || !isCheckedLS) return null;
 
   return (
     <div className={styles.wrapper}>

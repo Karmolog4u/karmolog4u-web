@@ -154,15 +154,14 @@ const MeditationForm = ({ edit }) => {
       const { isWaiting } = data;
       formData.append('isWaiting', isWaiting);
     }
-    if (data.category === CLOSED_MEDITATIONS && status === PUBLISHED) {
+    if (data.category === CLOSED_MEDITATIONS) {
       const { price, discount = null } = data;
-      formData.append('price', price);
-      if (discount) {
+      if (price) formData.append('price', price);
+      if (discount)
         formData.append(
           'discount',
           JSON.stringify({ discount, start: data.start_date, expiredAt: data.end_date })
         );
-      }
     }
     mutation.mutate({ info: formData });
   };

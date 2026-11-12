@@ -5,11 +5,27 @@ import DiscountCalendar from './DiscountCalendar';
 import { open_Sans } from '@/app/[locale]/layout';
 import DeleteDiscountButton from './DeleteDiscountButton';
 
+const normalizeDiscount = value => {
+  const normalized = value.replace(',', '.').replace(/[^\d.]/g, '');
+  const [rawInteger, ...rawDecimals] = normalized.split('.');
+  const integer = rawInteger.replace(/^0+(?=\d)/, '');
+  if (!integer && rawDecimals.length === 0) return '';
+
+  const numericInteger = Number(integer || 0);
+  if (numericInteger > 100) return '100';
+
+  const decimals = rawDecimals.join('').slice(0, 2);
+  if (numericInteger === 100 && Number(decimals) > 0) return '100';
+
+  return `${integer}${rawDecimals.length ? `.${decimals}` : ''}`;
+};
+
 const Price = () => {
   const [showDiscount, setShowDiscount] = useState(false);
 
   const {
     register,
+    setValue,
     watch,
     formState: { errors },
   } = useFormContext();
@@ -57,18 +73,20 @@ const Price = () => {
           <label className={`${styles.label}`}>
             Знижка %
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               min="0"
               max="100"
               {...register('discount', {
                 pattern: {
-                  value: /^(100|[1-9]?[0-9])$/,
+                  value: /^(?:100(?:\.0{1,2})?|\d{1,2}(?:\.\d{0,2})?)$/,
                   message: 'Введіть тільки цифри',
                 },
               })}
-              onInput={({ target }) => {
-                if (target.value > 100) target.value = 100;
-                if (target.value < 0) target.value = 0;
+              onChange={event => {
+                const value = normalizeDiscount(event.target.value);
+                event.target.value = value;
+                setValue('discount', value, { shouldDirty: true, shouldValidate: true });
               }}
               className={`${styles.input}`}
             />

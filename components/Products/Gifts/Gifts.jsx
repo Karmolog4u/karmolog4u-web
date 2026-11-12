@@ -27,7 +27,7 @@ const Gifts = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ['gifts'],
+    queryKey: ['gifts', 'public'],
     queryFn: () => getGifts(),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes

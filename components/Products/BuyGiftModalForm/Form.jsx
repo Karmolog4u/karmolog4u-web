@@ -49,6 +49,7 @@ const Form = ({ price, discount, id }) => {
 
     mutation.mutate({
       ...rest,
+      email: rest.email?.trim(),
       itemId: id,
       paymentType: 'FULL',
       warehouse: warehouse.label,
@@ -96,6 +97,7 @@ const Form = ({ price, discount, id }) => {
           name="email"
           labelName={t('email.email')}
           inputConfig={{
+            setValueAs: value => (typeof value === 'string' ? value.trim() : value),
             required: t('email.empty_error'),
             pattern: {
               value: /\S+@\S+\.\S+/,

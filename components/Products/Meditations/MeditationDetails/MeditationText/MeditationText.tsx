@@ -2,7 +2,7 @@ import { useLocale } from 'next-intl';
 import TitleNoStyles from '@/components/Common/TitleNoStyles/TitleNoStyles';
 import PaymentSection from './PaymentSection/PaymentSection';
 import HowToGetIt from './HowToGetIt/HowToGetIt';
-import { CLOSED_MEDITATIONS } from '@/helper/consts';
+import { BOOKS, CLOSED_MEDITATIONS, GUIDES, OTHER_GUIDES, WEBINARS } from '@/helper/consts';
 
 import styles from './MeditationText.module.scss';
 import DetailsDescription from './DetailsDescription/DetailsDescription';
@@ -36,7 +36,9 @@ const MeditationText = ({
         <PaymentSection setShowModal={setShowModal} price={price} discount={discount} />
       )}
       {description && <p className={styles.text}>{description[locale]}</p>}
-      {category === CLOSED_MEDITATIONS && <HowToGetIt />}
+      {[CLOSED_MEDITATIONS, WEBINARS, BOOKS, OTHER_GUIDES, GUIDES].includes(category) && (
+        <HowToGetIt />
+      )}
       {detailsDescription && <DetailsDescription detailsDescription={detailsDescription} />}
     </div>
   );

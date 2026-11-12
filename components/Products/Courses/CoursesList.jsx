@@ -21,7 +21,7 @@ const CoursesList = ({ showWebinars, showIntensives, showEthers }) => {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ['webinars'],
+    queryKey: ['webinars', 'public'],
     queryFn: getWebinarsList,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
