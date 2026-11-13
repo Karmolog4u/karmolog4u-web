@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { DRAFT, ETHERS, HIDDEN, PUBLISHED, WEBINARS } from '@/helper/consts';
+import { DRAFT, ETHERS, HIDDEN, PUBLISHED, TRAINING, WEBINARS } from '@/helper/consts';
 import EditButton from './EditButton/EditButton';
 
 import styles from './WebinarsList.module.scss';
@@ -12,7 +12,14 @@ const statusInfo = [
   { orig_name: HIDDEN, web_name: 'Приховано' },
   { orig_name: DRAFT, web_name: 'Чернетка' },
 ];
-const WebinarsList = ({ showWebinars, showEthers, isCheckedLS, status, webinars }) => {
+const WebinarsList = ({
+  showWebinars,
+  showEthers,
+  isCheckedLS,
+  status,
+  webinars,
+  showTraining,
+}) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -20,6 +27,7 @@ const WebinarsList = ({ showWebinars, showEthers, isCheckedLS, status, webinars 
     const sortedByCategory = [
       ...(showWebinars ? webinars.filter(el => el.category.includes(WEBINARS)) : []),
       ...(showEthers ? webinars.filter(el => el.category.includes(ETHERS)) : []),
+      ...(showTraining ? webinars.filter(el => el.category.includes(TRAINING)) : []),
     ];
 
     const finalList = [
@@ -28,7 +36,7 @@ const WebinarsList = ({ showWebinars, showEthers, isCheckedLS, status, webinars 
         : sortedByCategory.filter(el => el.status === status)),
     ];
     setList(finalList);
-  }, [isCheckedLS, showEthers, showWebinars, status, webinars]);
+  }, [isCheckedLS, showEthers, showTraining, showWebinars, status, webinars]);
 
   return (
     <ul className={styles.list}>

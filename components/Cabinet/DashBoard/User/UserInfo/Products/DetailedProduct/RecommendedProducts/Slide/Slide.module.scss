@@ -55,3 +55,31 @@
     font-size: 12px;
   }
 }
+
+.waiting_card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 98px;
+  height: 78px;
+  border-radius: 10px;
+  background-image: linear-gradient(270deg, #cfb691 -135.76%, #000 102.98%);
+
+  @media all and (min-width: $min_tablet) {
+    width: 100%;
+  }
+
+  @media all and (width >=$big_pc) {
+    height: 100px;
+  }
+
+  @media all and (width >=1600px) {
+    height: 120px;
+  }
+}
+
+.card_logo {
+  width: 70px;
+  height: 70px;
+  fill: white;
+}

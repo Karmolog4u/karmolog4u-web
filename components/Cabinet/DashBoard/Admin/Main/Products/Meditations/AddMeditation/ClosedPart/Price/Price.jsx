@@ -30,7 +30,7 @@ const Price = () => {
     formState: { errors },
   } = useFormContext();
   const newPriceCalculator = () => {
-    const newPrice = watch('price') - watch('price') * (watch('discount') / 100);
+    const newPrice = (watch('discount') * 100) / watch('price');
     return parseFloat(newPrice.toFixed(2));
   };
 
@@ -71,32 +71,40 @@ const Price = () => {
         )}
         {showDiscount && (
           <label className={`${styles.label}`}>
-            Знижка %
+            Знижка €
             <input
               type="text"
               inputMode="decimal"
               min="0"
               max="100"
               {...register('discount', {
+                validate: value =>
+                  !value || Number(value) <= Number(watch('price')) ||
+                  'Знижка не може бути більшою за початкову ціну',
                 pattern: {
                   value: /^(?:100(?:\.0{1,2})?|\d{1,2}(?:\.\d{0,2})?)$/,
                   message: 'Введіть тільки цифри',
                 },
               })}
               onChange={event => {
-                const value = normalizeDiscount(event.target.value);
+                let value = normalizeDiscount(event.target.value);
+                const price = Number(watch('price'));
+                if (value !== '' && price > 0 && Number(value) > price) {
+                  value = String(price);
+                }
                 event.target.value = value;
                 setValue('discount', value, { shouldDirty: true, shouldValidate: true });
               }}
               className={`${styles.input}`}
             />
+            {errors?.discount && <p className={styles.error}>{errors.discount.message}</p>}
           </label>
         )}
       </div>
       {showDiscount && !!watch('price') && !!watch('discount') && (
         <div className={styles.discount_wrapper}>
           <p className={styles.new_price}>
-            Нова ціна: <span>{newPriceCalculator()}€</span>
+           Знижка: <span>{newPriceCalculator()} %</span>
           </p>
           <DiscountCalendar />
           <DeleteDiscountButton />

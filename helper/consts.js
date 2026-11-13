@@ -1,7 +1,7 @@
-// export const base_url = 'http://localhost:3010';
+export const base_url = 'http://localhost:3010';
 // export const base_url = 'http://localhost:4499';
 // export const base_url = 'https://karmolog4u-backend-test.up.railway.app';
-export const base_url = 'https://karmolog4u-backend.up.railway.app';
+// export const base_url = 'https://karmolog4u-backend.up.railway.app';
 
 export const web_site = 'https://www.serhiiskliarenko.com.ua';
 export const tgLink = 'https://t.me/karmologforyou';
@@ -28,10 +28,12 @@ export const ARCHIVE = 'ARCHIVE';
 //webinars
 export const ADMIN_WEBINARS = 'admin_webinars';
 export const ADMIN_ETHERS = 'admin_ethers';
+export const ADMIN_TRAINING = 'admin_training';
 
 //webinars category
 export const WEBINARS = 'WEBINARS';
 export const ETHERS = 'ETHERS';
+export const TRAINING = 'TRAINING';
 
 //guide and books
 export const ADMIN_GUIDES = 'admin_guides';

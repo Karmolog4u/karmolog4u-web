@@ -453,8 +453,8 @@
     },
     "courses": {
       "checkboxes": {
-        "vebinars": "Вебінари",
-        "intensive": "Інтенсиви",
+        "webinars": "Лекції",
+        "intensive": "Тренінги",
         "therapeutic_ethers": "Терапевтичні ефіри"
       },
       "health_map": {

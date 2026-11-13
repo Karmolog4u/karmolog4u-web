@@ -30,8 +30,6 @@ const ProductInfo = ({ product }) => {
     link = null,
   } = product;
 
-  console.log(product);
-
   const categoriesMap = {
     [CLOSED_MEDITATIONS]: 'Медитація',
     [WEBINARS]: 'Вебінар',

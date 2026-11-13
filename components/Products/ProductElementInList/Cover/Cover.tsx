@@ -1,28 +1,44 @@
+import { useEffect, useState } from 'react';
+import { useParams, usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import Link from 'next/link';
 import Youtube from 'react-youtube';
-import Logo from '@/components/Common/Icons/Logo';
 import Image from 'next/image';
-import { ARCANES, CLOSED_MEDITATIONS, ETHERS } from '@/helper/consts';
+import Logo from '@/components/Common/Icons/Logo';
+import { ARCANES, CLOSED_MEDITATIONS, ETHERS, TRAINING, WEBINARS } from '@/helper/consts';
 import { ProductCardProps } from '@/types/products';
 
 import styles from './Cover.module.scss';
-import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
 
 interface CoverProps {
   card: ProductCardProps;
 }
 
 const Cover = ({ card }: CoverProps) => {
+  const [coverFailed, setCoverFailed] = useState(false);
   const p = usePathname();
   const params = useParams();
-  const { cover, isWaiting, video, category, discount = null, id } = card;
-  const coverUrl = typeof cover === 'string' && cover.startsWith('http') ? cover : '';
+  const locale = useLocale();
+  const { cover, isWaiting, video, category, discount = null, id, price, name } = card;
+  const normalizedCover = typeof cover === 'string' ? cover.trim().replace(/\\:/g, ':') : '';
+  let coverUrl = '';
+
+  try {
+    const parsedCover = new URL(normalizedCover);
+    if (['http:', 'https:'].includes(parsedCover.protocol)) coverUrl = parsedCover.href;
+  } catch {
+    console.log('Помилка картинки ', name.uk);
+  }
+
+  useEffect(() => {
+    setCoverFailed(false);
+  }, [coverUrl]);
 
   if (video?.video && !isWaiting && [ARCANES, ETHERS].includes(category)) {
     return <Youtube videoId={video.video} iframeClassName={styles.video} />;
   }
 
-  if (!coverUrl && !video?.video) {
+  if (!coverUrl || coverFailed) {
     return (
       <div className={styles.waiting_card}>
         <Logo styled={styles.card_logo} />
@@ -35,9 +51,18 @@ const Cover = ({ card }: CoverProps) => {
       className={styles.cover_wrapper}
       href={`${params.id ? `${p.split('/').slice(0, -1).join('/')}/${id}` : `${p}/${id}`}`}
     >
-      <Image src={coverUrl} alt="Cover" className={styles.video} width={302} height={190} />
-      {category === CLOSED_MEDITATIONS && discount && (
-        <span className={styles.discount}>-{discount.discount}%</span>
+      {coverUrl && !coverFailed && (
+        <Image
+          src={coverUrl}
+          alt={name[locale] || 'Image'}
+          className={styles.video}
+          width={302}
+          height={190}
+          onError={() => setCoverFailed(true)}
+        />
+      )}
+      {[CLOSED_MEDITATIONS, WEBINARS, TRAINING].includes(category) && price && discount && (
+        <span className={styles.discount}>-{Math.round((discount.discount * 100) / price)}%</span>
       )}
     </Link>
   );

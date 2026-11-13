@@ -2,10 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import ProductElementInList from '../ProductElementInList/ProductElementInList';
 import ProductsLoading from '../ProductsLoading/ProductsLoading';
 import ProductsError from '../ProductsError/ProductsError';
-import { base_url, ETHERS, WEBINARS } from '../../../helper/consts';
+import { base_url, ETHERS, TRAINING, WEBINARS } from '../../../helper/consts';
 
 import styles from './Courses.module.scss';
-import HealthMapProduct from '../HealthMapProduct/HealthMapProduct';
 
 const getWebinarsList = async () => {
   const res = await fetch(`${base_url}/products/webinars/get-all`);
@@ -15,7 +14,7 @@ const getWebinarsList = async () => {
   return res.json();
 };
 
-const CoursesList = ({ showWebinars, showIntensives, showEthers }) => {
+const CoursesList = ({ showWebinars, showTraining, showEthers }) => {
   const {
     data: webinars,
     isError,
@@ -32,7 +31,7 @@ const CoursesList = ({ showWebinars, showIntensives, showEthers }) => {
   const filterWebinars = () => {
     const allowedCategories = [
       showWebinars && WEBINARS,
-      showIntensives && 'intensive',
+      showTraining && TRAINING,
       showEthers && ETHERS,
     ].filter(Boolean); // Remove false values
 
@@ -50,11 +49,6 @@ const CoursesList = ({ showWebinars, showIntensives, showEthers }) => {
           <ProductElementInList card={el} />
         </li>
       ))}
-      {(showIntensives || (!showWebinars && !showEthers && !showIntensives)) && (
-        <li className={styles.courses_list_item}>
-          <HealthMapProduct />
-        </li>
-      )}
     </ul>
   );
 };

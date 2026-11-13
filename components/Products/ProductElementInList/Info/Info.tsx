@@ -8,7 +8,6 @@ import {
   ETHERS,
   GUIDES,
   OTHER_GUIDES,
-  tgLink,
   WEBINARS,
 } from '@/helper/consts';
 import { ProductCardProps } from '@/types/products';
@@ -26,27 +25,36 @@ const Info = ({ card, setShowModal }: InfoProps) => {
   const t = useTranslations('Author_products.meditations.list');
   const locale = useLocale();
 
-  const { name, price, isWaiting, discount, category, id } = card;
+  const { name, price, isWaiting, discount, category, id, video } = card;
 
-  const getPriceWithDiscount = () => {
+  const getDiscountPrice = () => {
     if (!discount || !price) return '';
-    return (price - (price * discount.discount) / 100).toFixed(2);
+    return price - discount.discount;
   };
 
   const showSellButtonCategories = [CLOSED_MEDITATIONS, WEBINARS, GUIDES, BOOKS, OTHER_GUIDES];
 
+  const openInNewTab = ETHERS && video?.playlist;
+  const getLink = () => {
+    if (openInNewTab)
+      return `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`;
+    return `${params.id ? `${p.split('/').slice(0, -1).join('/')}/${id}` : `${p}/${id}`}`;
+  };
+
   return (
     <div className={styles.info_wrapper}>
       <div className={styles.text_wrapper}>
-        {[ARCANES, ETHERS].includes(category) ? (
+        {[ARCANES].includes(category) ? (
           <p className={styles.name}>
             {name[locale]}
             {isWaiting && <span>({t('isWaiting')})</span>}
           </p>
         ) : (
           <Link
-            href={`${params.id ? `${p.split('/').slice(0, -1).join('/')}/${id}` : `${p}/${id}`}`}
+            href={getLink()}
             className={styles.name}
+            target={openInNewTab ? '_blank' : undefined}
+            rel={openInNewTab ? 'noopener noreferrer' : undefined}
           >
             {name[locale]}
             {isWaiting && <span>({t('isWaiting')})</span>}
@@ -54,7 +62,7 @@ const Info = ({ card, setShowModal }: InfoProps) => {
         )}
         {Number(price) > 0 && (
           <div className={styles.price_wrapper}>
-            {discount && <p className={styles.price}>{getPriceWithDiscount()}€</p>}
+            {discount && <p className={styles.price}>{getDiscountPrice()}€</p>}
             <p className={`${styles.price} ${discount?.discount ? styles.discount : ''}`}>
               {price}€
             </p>

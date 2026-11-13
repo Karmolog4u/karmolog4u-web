@@ -1,11 +1,11 @@
 import { useTranslations } from 'next-intl';
-import styles from './Courses.module.scss'
+import styles from './Courses.module.scss';
 
 const CoursesCheckboxes = ({
   showWebinars,
   setShowWebinars,
-  showIntensives,
-  setShowIntensives,
+  showTraining,
+  setShowTraining,
   showEthers,
   setShowEthers,
 }) => {
@@ -28,7 +28,7 @@ const CoursesCheckboxes = ({
               <path d="M5 30 L 20 45 L 45 5"></path>
             </svg>
           </label>
-          <p className={styles.text}>{t('vebinars')}</p>
+          <p className={styles.text}>{t('webinars')}</p>
         </div>
       </li>
       <li>
@@ -36,10 +36,10 @@ const CoursesCheckboxes = ({
           <input
             type="checkbox"
             id="check-2"
-            checked={showIntensives}
+            checked={showTraining}
             onChange={e => {
-              setShowIntensives(e.target.checked);
-              window.localStorage.setItem('showIntensives', JSON.stringify(e.target.checked));
+              setShowTraining(e.target.checked);
+              window.localStorage.setItem('showTraining', JSON.stringify(e.target.checked));
             }}
           />
           <label htmlFor="check-2">

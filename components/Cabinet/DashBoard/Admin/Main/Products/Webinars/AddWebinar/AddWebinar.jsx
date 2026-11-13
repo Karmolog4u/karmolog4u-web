@@ -9,7 +9,7 @@ import SubmitButtons from '../../Meditations/AddMeditation/SubmitButtons/SubmitB
 import WebinarPart from './WebinarPart/WebinarPart';
 import EthersPart from './EthersPart/EthersPart';
 import RequiredLabels from '../../Meditations/AddMeditation/RequiredLabels/RequiredLabels';
-import { base_url, ETHERS, WEBINARS } from '@/helper/consts';
+import { base_url, ETHERS, PUBLISHED, TRAINING, WEBINARS } from '@/helper/consts';
 import { getYoutubeUrlData } from '../../../../../../../../helper/platform/getYoutubeId';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -67,6 +67,7 @@ const setDefaultValues = item => {
 
 const categoriesList = [
   { value: WEBINARS, name: 'Вебінари' },
+  { value: TRAINING, name: 'Тренінги' },
   { value: ETHERS, name: 'Терапевтичні ефіри' },
 ];
 
@@ -136,17 +137,14 @@ const AddWebinar = ({ edit }) => {
       name: { uk: name_uk, ru: name_ru },
       category,
       status,
-      video: {
-        video: youtubeData.video,
-        playlist: category === WEBINARS ? youtubeData.playlist : '',
-      },
+      video: youtubeData,
     };
     //додаємо ключи які точно є
     Object.entries(requiredParams).forEach(([key, value]) => {
       formData.append(key, JSON.stringify(value));
     });
 
-    if (data.category === WEBINARS) {
+    if ([WEBINARS, TRAINING].includes(data.category)) {
       if (cover) {
         formData.append('cover', cover);
       }
@@ -174,8 +172,8 @@ const AddWebinar = ({ edit }) => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.labels_wrapper}>
           <RequiredLabels categories={categoriesList} />
-          {watch('category') === WEBINARS && <WebinarPart />}
           {watch('category') === ETHERS && <EthersPart />}
+          {[TRAINING, WEBINARS].includes(watch('category')) && <WebinarPart />}
         </div>
         <SubmitButtons setStatusAndSubmit={setStatusAndSubmit} />
       </form>

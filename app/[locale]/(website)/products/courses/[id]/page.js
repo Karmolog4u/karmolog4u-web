@@ -8,6 +8,7 @@ import MeditationsDescriptions from '@/components/Products/Meditations/Meditatio
 import ProductionCanBeInterestingSlider from '@/components/Common/ProductionCanBeInterestingSlider/ProductionCanBeInterestingSlider';
 import { base_url } from '../../../../../../helper/consts';
 import { useEffect } from 'react';
+import ProductsLoading from '../../../../../../components/Products/ProductsLoading/ProductsLoading';
 
 const getWebinarById = async id => {
   const res = await fetch(`${base_url}/products/webinars/get/${id}`);
@@ -53,6 +54,8 @@ const CoursesDetails = () => {
       return data.filter(w => w.category === webinar.category && w.id !== webinar.id);
     },
   });
+
+  if (isWebLoading) return <ProductsLoading />;
 
   if (!webinar) {
     return <Container>Продукт не знайдено</Container>;

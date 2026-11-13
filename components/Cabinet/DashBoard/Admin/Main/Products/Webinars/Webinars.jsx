@@ -8,7 +8,7 @@ import SkeletonProducts from '../SkeletonProducts/SkeletonProducts';
 import Status from '../Meditations/Status/Status';
 import WebinarsList from './WebinarsList/WebinarsList';
 
-import { ADMIN_ETHERS, ADMIN_WEBINARS, base_url } from '@/helper/consts';
+import { ADMIN_ETHERS, ADMIN_TRAINING, ADMIN_WEBINARS, base_url } from '@/helper/consts';
 import styles from './Webinars.module.scss';
 
 const fetchWebinars = async token => {
@@ -28,6 +28,7 @@ const fetchWebinars = async token => {
 const Webinars = () => {
   const [showWebinars, setShowWebinars] = useState(false);
   const [showEthers, setShowEthers] = useState(false);
+  const [showTraining, setShowTraining] = useState(false);
   const [isCheckedLS, setIsCheckedLS] = useState(false);
   const [status, setStatus] = useState('all');
   const { data: token } = useSession();
@@ -37,7 +38,7 @@ const Webinars = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['webinars'],
+    queryKey: ['webinars', 'admin'],
     queryFn: () => fetchWebinars(token.accessToken),
   });
 
@@ -45,6 +46,7 @@ const Webinars = () => {
     if (!isCheckedLS) {
       setShowWebinars(() => JSON.parse(window.localStorage.getItem(ADMIN_WEBINARS)) ?? true);
       setShowEthers(() => JSON.parse(window.localStorage.getItem(ADMIN_ETHERS)) ?? true);
+      setShowTraining(() => JSON.parse(window.localStorage.getItem(ADMIN_TRAINING)) ?? true);
       setIsCheckedLS(true);
     }
   }, [isCheckedLS]);
@@ -58,6 +60,8 @@ const Webinars = () => {
         setWebinars={setShowWebinars}
         showEthers={showEthers}
         setShowEthers={setShowEthers}
+        showTraining={showTraining}
+        setShowTraining={setShowTraining}
       />
       <Status activeStatus={status} setActiveStatus={setStatus} products={webinars} />
       {isLoading ? (
@@ -69,6 +73,7 @@ const Webinars = () => {
           isCheckedLS={isCheckedLS}
           status={status}
           webinars={webinars}
+          showTraining={showTraining}
         />
       )}
     </div>

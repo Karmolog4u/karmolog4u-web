@@ -8,15 +8,15 @@ import CoursesList from '@/components/Products/Courses/CoursesList';
 
 const CoursesPage = () => {
   const [showWebinars, setShowWebinars] = useState(false);
-  const [showIntensives, setShowIntensives] = useState(false);
+  const [showTraining, setShowTraining] = useState(false);
   const [showEthers, setShowEthers] = useState(false);
 
   useEffect(() => {
     setShowWebinars(() => {
       return JSON.parse(window.localStorage.getItem('showWebinars')) ?? true;
     });
-    setShowIntensives(() => {
-      return JSON.parse(window.localStorage.getItem('showIntensives')) ?? false;
+    setShowTraining(() => {
+      return JSON.parse(window.localStorage.getItem('showTraining')) ?? false;
     });
     setShowEthers(() => {
       return JSON.parse(window.localStorage.getItem('showEthers')) ?? false;
@@ -28,14 +28,14 @@ const CoursesPage = () => {
       <CoursesCheckboxes
         showWebinars={showWebinars}
         setShowWebinars={setShowWebinars}
-        showIntensives={showIntensives}
-        setShowIntensives={setShowIntensives}
+        showTraining={showTraining}
+        setShowTraining={setShowTraining}
         showEthers={showEthers}
         setShowEthers={setShowEthers}
       />
       <CoursesList
         showWebinars={showWebinars}
-        showIntensives={showIntensives}
+        showTraining={showTraining}
         showEthers={showEthers}
       />
     </Container>
