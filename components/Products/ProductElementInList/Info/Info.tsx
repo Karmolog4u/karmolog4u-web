@@ -34,17 +34,19 @@ const Info = ({ card, setShowModal }: InfoProps) => {
 
   const showSellButtonCategories = [CLOSED_MEDITATIONS, WEBINARS, GUIDES, BOOKS, OTHER_GUIDES];
 
-  const openInNewTab = ETHERS && video?.playlist;
+  const openInNewTab = category === ETHERS && Boolean(video?.playlist);
   const getLink = () => {
-    if (openInNewTab)
+    if (openInNewTab && video?.playlist)
       return `https://youtube.com/watch?v=${video.video}${video.playlist ? `&list=${video.playlist}` : ''}`;
     return `${params.id ? `${p.split('/').slice(0, -1).join('/')}/${id}` : `${p}/${id}`}`;
   };
 
+  const isPlainText = [ARCANES].includes(category) || (category === ETHERS && !video?.playlist);
+
   return (
     <div className={styles.info_wrapper}>
       <div className={styles.text_wrapper}>
-        {[ARCANES].includes(category) ? (
+        {isPlainText ? (
           <p className={styles.name}>
             {name[locale]}
             {isWaiting && <span>({t('isWaiting')})</span>}
