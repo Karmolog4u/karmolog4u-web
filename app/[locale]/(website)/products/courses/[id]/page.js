@@ -9,6 +9,7 @@ import ProductionCanBeInterestingSlider from '@/components/Common/ProductionCanB
 import { base_url } from '../../../../../../helper/consts';
 import { useEffect } from 'react';
 import ProductsLoading from '../../../../../../components/Products/ProductsLoading/ProductsLoading';
+import { getRecommendedWebinars } from './recommendations';
 
 const getWebinarById = async id => {
   const res = await fetch(`${base_url}/products/webinars/get/${id}`);
@@ -49,10 +50,7 @@ const CoursesDetails = () => {
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     enabled: !!webinar,
-    select: data => {
-      if (!webinar) return [];
-      return data.filter(w => w.category === webinar.category && w.id !== webinar.id);
-    },
+    select: data => getRecommendedWebinars(data, webinar),
   });
 
   if (isWebLoading) return <ProductsLoading />;
